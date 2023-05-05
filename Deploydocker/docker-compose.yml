@@ -1,0 +1,28 @@
+version: "3"
+services:
+  react-app:
+    image: mehlasaab/skybnb_frontend:latest
+    ports:
+      - "5173:5173"
+    networks:
+      - mern-app
+  api-server:
+    image: mehlasaab/skybnb_backend:latest
+    ports:
+      - "4001:4001"
+    networks:
+      - mern-app
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo:3.6.23-xenial
+    networks:
+      - mern-app
+    volumes:
+      - mongo-data:/data/db
+networks:
+  mern-app:
+    driver: bridge
+volumes:
+  mongo-data:
+    driver: local
